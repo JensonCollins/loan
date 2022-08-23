@@ -21,6 +21,20 @@ export interface MsgApproveLoan {
 
 export interface MsgApproveLoanResponse {}
 
+export interface MsgRepayLoan {
+  creator: string;
+  id: number;
+}
+
+export interface MsgRepayLoanResponse {}
+
+export interface MsgLiquidateLoan {
+  creator: string;
+  id: number;
+}
+
+export interface MsgLiquidateLoanResponse {}
+
 const baseMsgRequestLoan: object = {
   creator: "",
   amount: "",
@@ -298,11 +312,247 @@ export const MsgApproveLoanResponse = {
   },
 };
 
+const baseMsgRepayLoan: object = { creator: "", id: 0 };
+
+export const MsgRepayLoan = {
+  encode(message: MsgRepayLoan, writer: Writer = Writer.create()): Writer {
+    if (message.creator !== "") {
+      writer.uint32(10).string(message.creator);
+    }
+    if (message.id !== 0) {
+      writer.uint32(16).uint64(message.id);
+    }
+    return writer;
+  },
+
+  decode(input: Reader | Uint8Array, length?: number): MsgRepayLoan {
+    const reader = input instanceof Uint8Array ? new Reader(input) : input;
+    let end = length === undefined ? reader.len : reader.pos + length;
+    const message = { ...baseMsgRepayLoan } as MsgRepayLoan;
+    while (reader.pos < end) {
+      const tag = reader.uint32();
+      switch (tag >>> 3) {
+        case 1:
+          message.creator = reader.string();
+          break;
+        case 2:
+          message.id = longToNumber(reader.uint64() as Long);
+          break;
+        default:
+          reader.skipType(tag & 7);
+          break;
+      }
+    }
+    return message;
+  },
+
+  fromJSON(object: any): MsgRepayLoan {
+    const message = { ...baseMsgRepayLoan } as MsgRepayLoan;
+    if (object.creator !== undefined && object.creator !== null) {
+      message.creator = String(object.creator);
+    } else {
+      message.creator = "";
+    }
+    if (object.id !== undefined && object.id !== null) {
+      message.id = Number(object.id);
+    } else {
+      message.id = 0;
+    }
+    return message;
+  },
+
+  toJSON(message: MsgRepayLoan): unknown {
+    const obj: any = {};
+    message.creator !== undefined && (obj.creator = message.creator);
+    message.id !== undefined && (obj.id = message.id);
+    return obj;
+  },
+
+  fromPartial(object: DeepPartial<MsgRepayLoan>): MsgRepayLoan {
+    const message = { ...baseMsgRepayLoan } as MsgRepayLoan;
+    if (object.creator !== undefined && object.creator !== null) {
+      message.creator = object.creator;
+    } else {
+      message.creator = "";
+    }
+    if (object.id !== undefined && object.id !== null) {
+      message.id = object.id;
+    } else {
+      message.id = 0;
+    }
+    return message;
+  },
+};
+
+const baseMsgRepayLoanResponse: object = {};
+
+export const MsgRepayLoanResponse = {
+  encode(_: MsgRepayLoanResponse, writer: Writer = Writer.create()): Writer {
+    return writer;
+  },
+
+  decode(input: Reader | Uint8Array, length?: number): MsgRepayLoanResponse {
+    const reader = input instanceof Uint8Array ? new Reader(input) : input;
+    let end = length === undefined ? reader.len : reader.pos + length;
+    const message = { ...baseMsgRepayLoanResponse } as MsgRepayLoanResponse;
+    while (reader.pos < end) {
+      const tag = reader.uint32();
+      switch (tag >>> 3) {
+        default:
+          reader.skipType(tag & 7);
+          break;
+      }
+    }
+    return message;
+  },
+
+  fromJSON(_: any): MsgRepayLoanResponse {
+    const message = { ...baseMsgRepayLoanResponse } as MsgRepayLoanResponse;
+    return message;
+  },
+
+  toJSON(_: MsgRepayLoanResponse): unknown {
+    const obj: any = {};
+    return obj;
+  },
+
+  fromPartial(_: DeepPartial<MsgRepayLoanResponse>): MsgRepayLoanResponse {
+    const message = { ...baseMsgRepayLoanResponse } as MsgRepayLoanResponse;
+    return message;
+  },
+};
+
+const baseMsgLiquidateLoan: object = { creator: "", id: 0 };
+
+export const MsgLiquidateLoan = {
+  encode(message: MsgLiquidateLoan, writer: Writer = Writer.create()): Writer {
+    if (message.creator !== "") {
+      writer.uint32(10).string(message.creator);
+    }
+    if (message.id !== 0) {
+      writer.uint32(16).uint64(message.id);
+    }
+    return writer;
+  },
+
+  decode(input: Reader | Uint8Array, length?: number): MsgLiquidateLoan {
+    const reader = input instanceof Uint8Array ? new Reader(input) : input;
+    let end = length === undefined ? reader.len : reader.pos + length;
+    const message = { ...baseMsgLiquidateLoan } as MsgLiquidateLoan;
+    while (reader.pos < end) {
+      const tag = reader.uint32();
+      switch (tag >>> 3) {
+        case 1:
+          message.creator = reader.string();
+          break;
+        case 2:
+          message.id = longToNumber(reader.uint64() as Long);
+          break;
+        default:
+          reader.skipType(tag & 7);
+          break;
+      }
+    }
+    return message;
+  },
+
+  fromJSON(object: any): MsgLiquidateLoan {
+    const message = { ...baseMsgLiquidateLoan } as MsgLiquidateLoan;
+    if (object.creator !== undefined && object.creator !== null) {
+      message.creator = String(object.creator);
+    } else {
+      message.creator = "";
+    }
+    if (object.id !== undefined && object.id !== null) {
+      message.id = Number(object.id);
+    } else {
+      message.id = 0;
+    }
+    return message;
+  },
+
+  toJSON(message: MsgLiquidateLoan): unknown {
+    const obj: any = {};
+    message.creator !== undefined && (obj.creator = message.creator);
+    message.id !== undefined && (obj.id = message.id);
+    return obj;
+  },
+
+  fromPartial(object: DeepPartial<MsgLiquidateLoan>): MsgLiquidateLoan {
+    const message = { ...baseMsgLiquidateLoan } as MsgLiquidateLoan;
+    if (object.creator !== undefined && object.creator !== null) {
+      message.creator = object.creator;
+    } else {
+      message.creator = "";
+    }
+    if (object.id !== undefined && object.id !== null) {
+      message.id = object.id;
+    } else {
+      message.id = 0;
+    }
+    return message;
+  },
+};
+
+const baseMsgLiquidateLoanResponse: object = {};
+
+export const MsgLiquidateLoanResponse = {
+  encode(
+    _: MsgLiquidateLoanResponse,
+    writer: Writer = Writer.create()
+  ): Writer {
+    return writer;
+  },
+
+  decode(
+    input: Reader | Uint8Array,
+    length?: number
+  ): MsgLiquidateLoanResponse {
+    const reader = input instanceof Uint8Array ? new Reader(input) : input;
+    let end = length === undefined ? reader.len : reader.pos + length;
+    const message = {
+      ...baseMsgLiquidateLoanResponse,
+    } as MsgLiquidateLoanResponse;
+    while (reader.pos < end) {
+      const tag = reader.uint32();
+      switch (tag >>> 3) {
+        default:
+          reader.skipType(tag & 7);
+          break;
+      }
+    }
+    return message;
+  },
+
+  fromJSON(_: any): MsgLiquidateLoanResponse {
+    const message = {
+      ...baseMsgLiquidateLoanResponse,
+    } as MsgLiquidateLoanResponse;
+    return message;
+  },
+
+  toJSON(_: MsgLiquidateLoanResponse): unknown {
+    const obj: any = {};
+    return obj;
+  },
+
+  fromPartial(
+    _: DeepPartial<MsgLiquidateLoanResponse>
+  ): MsgLiquidateLoanResponse {
+    const message = {
+      ...baseMsgLiquidateLoanResponse,
+    } as MsgLiquidateLoanResponse;
+    return message;
+  },
+};
+
 /** Msg defines the Msg service. */
 export interface Msg {
   RequestLoan(request: MsgRequestLoan): Promise<MsgRequestLoanResponse>;
-  /** this line is used by starport scaffolding # proto/tx/rpc */
   ApproveLoan(request: MsgApproveLoan): Promise<MsgApproveLoanResponse>;
+  RepayLoan(request: MsgRepayLoan): Promise<MsgRepayLoanResponse>;
+  /** this line is used by starport scaffolding # proto/tx/rpc */
+  LiquidateLoan(request: MsgLiquidateLoan): Promise<MsgLiquidateLoanResponse>;
 }
 
 export class MsgClientImpl implements Msg {
@@ -331,6 +581,30 @@ export class MsgClientImpl implements Msg {
     );
     return promise.then((data) =>
       MsgApproveLoanResponse.decode(new Reader(data))
+    );
+  }
+
+  RepayLoan(request: MsgRepayLoan): Promise<MsgRepayLoanResponse> {
+    const data = MsgRepayLoan.encode(request).finish();
+    const promise = this.rpc.request(
+      "jensoncollins.loan.loan.Msg",
+      "RepayLoan",
+      data
+    );
+    return promise.then((data) =>
+      MsgRepayLoanResponse.decode(new Reader(data))
+    );
+  }
+
+  LiquidateLoan(request: MsgLiquidateLoan): Promise<MsgLiquidateLoanResponse> {
+    const data = MsgLiquidateLoan.encode(request).finish();
+    const promise = this.rpc.request(
+      "jensoncollins.loan.loan.Msg",
+      "LiquidateLoan",
+      data
+    );
+    return promise.then((data) =>
+      MsgLiquidateLoanResponse.decode(new Reader(data))
     );
   }
 }
